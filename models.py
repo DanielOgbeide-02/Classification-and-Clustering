@@ -1,4 +1,4 @@
-# src/webapp/models.py
+# models.py  (in your project root)
 
 import os
 import joblib
@@ -6,12 +6,11 @@ from sklearn.datasets        import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble        import RandomForestClassifier
 
-# ─── Make BASE_DIR the directory this file lives in
+# ─── Directory where this file lives (your repo root under /opt/render/project/src)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# ─── If you keep your pickle in the same folder as this file:
-MODEL_FILENAME = "breast_cancer_model.pkl"
-MODEL_PATH     = os.path.join(BASE_DIR, MODEL_FILENAME)
+# ─── Point MODEL_PATH at the .pkl inside src/webapp/
+MODEL_PATH = os.path.join(BASE_DIR, "src", "webapp", "breast_cancer_model.pkl")
 
 def train_and_save():
     """Train on the breast-cancer dataset and dump a RandomForest to MODEL_PATH."""
@@ -26,7 +25,7 @@ def train_and_save():
     rf.fit(X_train, y_train)
 
     # ensure output directory exists
-    os.makedirs(BASE_DIR, exist_ok=True)
+    os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
     joblib.dump(rf, MODEL_PATH)
     print(f"Model saved to {MODEL_PATH!r}")
 
