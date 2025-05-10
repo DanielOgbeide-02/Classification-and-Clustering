@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prediction Result</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; color: #fff;
+    }
+    .card {
+      background: rgba(0,0,0,0.65);
+      border-radius: 12px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      text-align: center;
+      animation: slideUp 0.6s ease-out both;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    h1 {
+      font-size: 2rem; margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+    }
+    .result-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+      animation: pulse 1.2s infinite alternate;
+    }
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to   { transform: scale(1.1); }
+    }
+    .confidence {
+      font-size: 1.2rem; margin: 1.5rem 0;
+      background: linear-gradient(90deg, #ff5e62, #ffc371);
+      padding: 0.8rem 1.2rem;
+      border-radius: 8px;
+      display: inline-block;
+    }
+    .try-again {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background: rgba(255,255,255,0.2);
+      border-radius: 6px;
+      color: #fff; text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .try-again:hover {
+      background: rgba(255,255,255,0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    {% if prediction == "Benign" %}
+      <div class="result-icon">✅</div>
+      <h1>Safe Diagnosis</h1>
+      <p>Your tumor features indicate a <strong>benign</strong> growth.</p>
+    {% else %}
+      <div class="result-icon">⚠️</div>
+      <h1>Alert</h1>
+      <p>Your tumor features suggest a <strong>malignant</strong> growth.</p>
+    {% endif %}
+    <div class="confidence">
+      Confidence: {{ (probability*100)|round(2) }}%
+    </div>
+    <br>
+    <a href="/" class="try-again">📝 Try Another Prediction</a>
+  </div>
+</body>
+</html>
